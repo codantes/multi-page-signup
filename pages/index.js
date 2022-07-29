@@ -6,19 +6,30 @@ import {FcGoogle} from 'react-icons/fc'
 
 const Home = () => {
   const [page, setPage] = useState(0)
-  const [user, setUser] = useState('')
   const [value, setValue] = useState('')
+  const [user, setUser] = useState({
+    user_type : '',
+    full_name : '',
+    email : '',
+    password : '',
+    bvn : '', 
+    phone_number : '',
+    address : '',
+  })
+  
 
 
   const handleUserType = (e) => {
-    setUser(e.target.value)
+    setUser((prevUser) => ({...prevUser, user_type : e.target.value}) )
     console.log(user)
     setPage((currPage) => currPage + 1)
   }
 
   const handleFormSubmit = () => {
-    window.alert('form submitted, your profile has been registered')
+    window.alert('form submitted, your profile has been registered your name:' + user.full_name + ', email :' +user.email + ', address :' + user.address + ', bank verification number :' + user.bvn)
+    
   }
+  
   return (
     <section className='flex font-sans overflow-y-hidden'>
   
@@ -92,7 +103,7 @@ const Home = () => {
           <section className=" flex flex-col justify-center items-center">
             <article className="w-3/5 mx-auto my-4">
               <h1 className="font-left text-3xl ">
-                Register {user} account
+                Register {user.user_type} account
               </h1>
               <p className='text-lg text-gray-500'>
                 For purpose of industry regulation your details are required
@@ -105,7 +116,9 @@ const Home = () => {
               </label>
               <input type="text" 
               name="name" 
-              id="name" 
+              id="name"
+              value={user.full_name}
+              onChange={(e) => setUser((prevUser) => ({...prevUser, full_name : e.target.value}))} 
               className="h-12 p-4 border-2 rounded-md border-gray-300 focus:border-blue-400 mb-4"/>
 
               <label htmlFor="email" className='text-lg text-gray-500'>
@@ -113,7 +126,9 @@ const Home = () => {
               </label>
               <input type="email" 
               name="email" 
-              id="email" 
+              id="email"
+              value={user.email}
+              onChange={(e) => setUser((prevUser) => ({...prevUser, email : e.target.value}))}  
               className="h-12 p-4 border-2 rounded-md border-gray-300 focus:border-blue-400 mb-4"/>
 
               <label htmlFor="password" className='text-lg text-gray-500'>
@@ -123,6 +138,8 @@ const Home = () => {
               type="password" 
               name="password" 
               id="password" 
+              value={user.password}
+              onChange={(e) => setUser((prevUser) => ({...prevUser, password : e.target.value}))} 
               className="h-12 p-4 border-2 rounded-md border-gray-300 focus:border-blue-400 mb-4"/>
 
               <div className="mb-3">
@@ -134,6 +151,7 @@ const Home = () => {
             <button
             onClick={() => (setPage((currPage) => currPage + 1))}
             className='mx-auto w-3/5 rounded-md text-white text-xl bg-blue-500 h-12 hover:shadow-lg'
+            disabled={!((user.password)&&(user.full_name)&&(user.email))}
             >
               Register account
             </button>
@@ -155,7 +173,7 @@ const Home = () => {
           <section className=" flex flex-col justify-center items-center">
             <article className="w-3/5 mx-auto my-4">
               <h1 className="font-left text-3xl ">
-                Register {user} account
+                Register {user.user_type} account
               </h1>
               <p className='text-lg text-gray-500'>
                 For purpose of industry regulation your details are required
@@ -169,7 +187,8 @@ const Home = () => {
               <div className="h-12 p-4 border-2 rounded-md border-gray-300 focus:border-blue-400 mb-4 flex items-center">
               <PhoneInput
               value={value}
-              onChange={setValue}/>
+              onChange={setValue}
+              />
               </div>
 
               <label htmlFor="address" className='text-lg text-gray-500'>
@@ -178,12 +197,15 @@ const Home = () => {
               <input type="text" 
               name="address" 
               id="address" 
+              value={user.address}
+              onChange={(e) => setUser((prevUser) => ({...prevUser, address : e.target.value}))}
               className="h-12 p-4 border-2 rounded-md border-gray-300 focus:border-blue-400 mb-4"/>
             </form>
 
             <button
             onClick={() => (setPage((currPage) => currPage + 1))}
             className='mx-auto w-3/5 rounded-md text-white text-xl bg-blue-500 h-12 hover:shadow-lg'
+            disabled={!((value)&&(user.address))}
             >
               save and continue
             </button>
@@ -209,12 +231,15 @@ const Home = () => {
               <input type="text" 
               name="address" 
               id="address" 
+              value={user.bvn}
+              onChange={(e) => setUser((prevUser) => ({...prevUser, bvn : e.target.value}))}
               className="h-12 p-4 border-2 rounded-md border-gray-300 focus:border-blue-400 mb-4"/>
             </form>
 
             <button
             onClick={handleFormSubmit}
             className='mx-auto w-3/5 rounded-md text-white text-xl bg-blue-500 h-12 hover:shadow-lg'
+            disabled={!((user.bvn))}
             >
               save and continue
             </button>
